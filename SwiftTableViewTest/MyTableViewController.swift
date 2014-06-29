@@ -19,7 +19,8 @@ class MyTableData: NSObject, UITableViewDataSource {
     func item(#indexPath: NSIndexPath!) -> String {
         return self.itemList[indexPath.section][indexPath.row]
     }
-    
+
+// #pragma mark UITableViewDataSource
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return self.itemList.count
     }
@@ -42,8 +43,8 @@ class MyTableData: NSObject, UITableViewDataSource {
 
 class MyTableViewController: UIViewController, UITableViewDelegate {
     
-    let tableView: UITableView = UITableView(frame:CGRectZero, style:.Plain)
-    let tableData: MyTableData = MyTableData()
+    let tableView = UITableView(frame:CGRectZero, style:.Plain)
+    let tableData = MyTableData()
     
     
     init () {
@@ -77,6 +78,7 @@ class MyTableViewController: UIViewController, UITableViewDelegate {
         tableView.contentInset = UIEdgeInsetsMake(self.topLayoutGuide.length, 0, self.bottomLayoutGuide.length, 0)
     }
     
+// #pragma mark UITableViewDelegate
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
         return 70
     }
