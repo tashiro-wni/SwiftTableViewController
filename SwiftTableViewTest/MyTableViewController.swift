@@ -30,7 +30,11 @@ class MyTableData: NSObject, UITableViewDataSource {
     }
 
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String {
-        return self.sectionTitle[section]
+        if section < sectionTitle.count {
+            return self.sectionTitle[section]
+        } else {
+            return ""
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
