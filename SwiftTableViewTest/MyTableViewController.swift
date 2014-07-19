@@ -39,7 +39,7 @@ class MyTableData: NSObject, UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as UITableViewCell
-        cell.text = self.item(indexPath: indexPath)
+        cell.textLabel.text = self.item(indexPath: indexPath)
         return cell
     }
     
