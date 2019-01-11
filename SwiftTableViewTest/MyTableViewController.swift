@@ -8,30 +8,29 @@
 
 import UIKit
 
-class MyTableData: NSObject, UITableViewDataSource {
+final class MyTableData: NSObject, UITableViewDataSource {
     
     let cellIdentifier = "Cell"
     let sectionTitle = [ "fruits", "vegetables" ]
     let itemList = [ [ "apple 🍎", "banana 🍌", "cherry 🍒", "orange 🍊", "grape 🍇", "pineapple 🍍", "meron 🍈" ],
                      [ "watermelon 🍉", "lemon 🍋", "tomato 🍅", "corn 🌽", "eggplant 🍆" ] ]
-
     
     func item(indexPath: IndexPath) -> String {
-        return self.itemList[indexPath.section][indexPath.row]
+        return itemList[indexPath.section][indexPath.row]
     }
 
-// #pragma mark UITableViewDataSource
+    //MARK: - UITableViewDataSource
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.itemList.count
+        return itemList.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.itemList[section].count
+        return itemList[section].count
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section < sectionTitle.count {
-            return self.sectionTitle[section]
+            return sectionTitle[section]
         } else {
             return ""
         }
@@ -39,16 +38,16 @@ class MyTableData: NSObject, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as UITableViewCell
-        cell.textLabel?.text = self.item(indexPath: indexPath)
+        cell.textLabel?.text = item(indexPath: indexPath)
         return cell
     }
     
 }
 
-class MyTableViewController: UIViewController, UITableViewDelegate {
+final class MyTableViewController: UIViewController, UITableViewDelegate {
     
-    let tableView = UITableView(frame:CGRect.zero, style:.plain)
-    let tableData = MyTableData()
+    private let tableView = UITableView(frame: .zero, style: .plain)
+    private let tableData = MyTableData()
     
     
     init () {
@@ -67,15 +66,14 @@ class MyTableViewController: UIViewController, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
-        //
-        tableView.frame = self.view.bounds
+        tableView.frame = view.bounds
         tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
   
         tableView.delegate = self
         tableView.dataSource = tableData
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: tableData.cellIdentifier)
-        tableView.separatorColor = UIColor.blue
+        tableView.separatorColor = .blue
+        tableView.rowHeight = 70
         
         self.view.addSubview(tableView)
     }
@@ -83,23 +81,16 @@ class MyTableViewController: UIViewController, UITableViewDelegate {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        tableView.contentInset = UIEdgeInsets.init(top: topLayoutGuide.length, left: 0, bottom: bottomLayoutGuide.length, right: 0)
+        tableView.contentInset = view.safeAreaInsets
     }
     
-// #pragma mark UITableViewDelegate
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70
-    }
-
+    //MARK: - UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated:true)
         
-        //let alert = UIAlertView(title: nil, message: text, delegate: nil, cancelButtonTitle: "OK")  // => clash
-        let alert = UIAlertView()
-        alert.title = "Clicked"
-        alert.message = tableData.item(indexPath: indexPath)
-        alert.addButton(withTitle: "OK")
-        alert.show()
+        let alert = UIAlertController(title: "Clicked", message: tableData.item(indexPath: indexPath), preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
     
 }
