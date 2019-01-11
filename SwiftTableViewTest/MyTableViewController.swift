@@ -37,18 +37,17 @@ final class MyTableData: NSObject, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
         cell.textLabel?.text = item(indexPath: indexPath)
         return cell
     }
-    
 }
+
 
 final class MyTableViewController: UIViewController, UITableViewDelegate {
     
     private let tableView = UITableView(frame: .zero, style: .plain)
     private let tableData = MyTableData()
-    
     
     init () {
         super.init(nibName: nil, bundle: nil)
@@ -78,15 +77,9 @@ final class MyTableViewController: UIViewController, UITableViewDelegate {
         self.view.addSubview(tableView)
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        tableView.contentInset = view.safeAreaInsets
-    }
-    
     //MARK: - UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated:true)
+        tableView.deselectRow(at: indexPath, animated: true)
         
         let alert = UIAlertController(title: "Clicked", message: tableData.item(indexPath: indexPath), preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
