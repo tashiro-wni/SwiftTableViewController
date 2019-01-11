@@ -16,20 +16,20 @@ class MyTableData: NSObject, UITableViewDataSource {
                      [ "watermelon 🍉", "lemon 🍋", "tomato 🍅", "corn 🌽", "eggplant 🍆" ] ]
 
     
-    func item(#indexPath: NSIndexPath!) -> String {
+    func item(indexPath: IndexPath) -> String {
         return self.itemList[indexPath.section][indexPath.row]
     }
 
 // #pragma mark UITableViewDataSource
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return self.itemList.count
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.itemList[section].count
     }
 
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section < sectionTitle.count {
             return self.sectionTitle[section]
         } else {
@@ -37,9 +37,9 @@ class MyTableData: NSObject, UITableViewDataSource {
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as UITableViewCell
-        cell.textLabel.text = self.item(indexPath: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as UITableViewCell
+        cell.textLabel?.text = self.item(indexPath: indexPath)
         return cell
     }
     
@@ -47,12 +47,16 @@ class MyTableData: NSObject, UITableViewDataSource {
 
 class MyTableViewController: UIViewController, UITableViewDelegate {
     
-    let tableView = UITableView(frame:CGRectZero, style:.Plain)
+    let tableView = UITableView(frame:CGRect.zero, style:.plain)
     let tableData = MyTableData()
     
     
     init () {
         super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func didReceiveMemoryWarning() {
@@ -66,12 +70,12 @@ class MyTableViewController: UIViewController, UITableViewDelegate {
         // Do any additional setup after loading the view.
         //
         tableView.frame = self.view.bounds
-        tableView.autoresizingMask = .FlexibleWidth | .FlexibleHeight
+        tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
   
         tableView.delegate = self
         tableView.dataSource = tableData
-        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: tableData.cellIdentifier)
-        tableView.separatorColor = UIColor.blueColor()
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: tableData.cellIdentifier)
+        tableView.separatorColor = UIColor.blue
         
         self.view.addSubview(tableView)
     }
@@ -83,18 +87,18 @@ class MyTableViewController: UIViewController, UITableViewDelegate {
     }
     
 // #pragma mark UITableViewDelegate
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
     }
 
-    func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
-        tableView.deselectRowAtIndexPath(indexPath, animated:true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated:true)
         
         //let alert = UIAlertView(title: nil, message: text, delegate: nil, cancelButtonTitle: "OK")  // => clash
         let alert = UIAlertView()
         alert.title = "Clicked"
         alert.message = tableData.item(indexPath: indexPath)
-        alert.addButtonWithTitle("OK")
+        alert.addButton(withTitle: "OK")
         alert.show()
     }
     
