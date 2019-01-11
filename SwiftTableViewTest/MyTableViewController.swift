@@ -83,7 +83,7 @@ class MyTableViewController: UIViewController, UITableViewDelegate {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        tableView.contentInset = UIEdgeInsetsMake(self.topLayoutGuide.length, 0, self.bottomLayoutGuide.length, 0)
+        tableView.contentInset = UIEdgeInsets.init(top: topLayoutGuide.length, left: 0, bottom: bottomLayoutGuide.length, right: 0)
     }
     
 // #pragma mark UITableViewDelegate
