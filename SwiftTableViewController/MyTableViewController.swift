@@ -19,7 +19,7 @@ final class MyTableData: NSObject, UITableViewDataSource {
         return itemList[indexPath.section][indexPath.row]
     }
 
-    //MARK: - UITableViewDataSource
+    // MARK: - UITableViewDataSource
     func numberOfSections(in tableView: UITableView) -> Int {
         return itemList.count
     }
@@ -43,7 +43,7 @@ final class MyTableData: NSObject, UITableViewDataSource {
     }
 }
 
-
+// MARK: - MyTableViewController
 final class MyTableViewController: UIViewController, UITableViewDelegate {
     
     private let tableView = UITableView(frame: .zero, style: .plain)
@@ -78,7 +78,7 @@ final class MyTableViewController: UIViewController, UITableViewDelegate {
         view.addSubview(tableView)
     }
 
-    //MARK: - UITableViewDelegate
+    // MARK: - UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
