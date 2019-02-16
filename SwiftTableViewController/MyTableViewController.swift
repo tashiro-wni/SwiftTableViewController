@@ -1,6 +1,6 @@
 //
 //  MyTableViewController.swift
-//  SwiftTableViewTest
+//  SwiftTableViewController
 //
 //  Created by Tomohiro Tashiro on 2014/06/28.
 //  Copyright (c) 2014 test. All rights reserved.
@@ -73,8 +73,9 @@ final class MyTableViewController: UIViewController, UITableViewDelegate {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: tableData.cellIdentifier)
         tableView.separatorColor = .blue
         tableView.rowHeight = 70
+        tableView.tableFooterView = UIView(frame: .zero)
         
-        self.view.addSubview(tableView)
+        view.addSubview(tableView)
     }
 
     //MARK: - UITableViewDelegate

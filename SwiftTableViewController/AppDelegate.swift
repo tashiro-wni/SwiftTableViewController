@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  SwiftTableViewTest
+//  SwiftTableViewController
 //
 //  Created by Tomohiro Tashiro on 2014/06/28.
 //  Copyright (c) 2014 test. All rights reserved.
